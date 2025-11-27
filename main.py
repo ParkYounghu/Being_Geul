@@ -5,6 +5,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from fastapi.responses import RedirectResponse
 from dotenv import load_dotenv
 
+
 from routes.auth import router as auth_router
 from routes.programs import router as programs_router
 from routes.admin import router as admin_router
