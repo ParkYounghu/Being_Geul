@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>오늘의 정책 - Policy Matcher</title>
+    <title>오늘의 정책</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
 </head>
@@ -12,42 +12,34 @@
         <aside class="sidebar">
             <div class="logo-area">Policy Matcher</div>
             <nav class="menu">
-                <a href="/" class="menu-item {% if active_page == '/' %}active{% endif %}">
-                    <i class="fas fa-layer-group"></i>
-                    <span>오늘의 정책</span>
-                </a>
-                <a href="/index_02" class="menu-item {% if active_page == '/index_02' %}active{% endif %}">
-                    <i class="fas fa-bookmark"></i>
-                    <span>찜한 정책</span>
-                </a>
-                <a href="/index_03" class="menu-item {% if active_page == '/index_03' %}active{% endif %}">
-                    <i class="fas fa-chart-pie"></i>
-                    <span>취향 분석</span>
-                </a>
-                <a href="/index_04" class="menu-item {% if active_page == '/index_04' %}active{% endif %}">
-                    <i class="fas fa-search"></i>
-                    <span>정책 탐색</span>
-                </a>
+                <a href="/" class="menu-item {% if active_page == '/' %}active{% endif %}"><i class="fas fa-layer-group"></i><span>오늘의 정책</span></a>
+                <a href="/index_02" class="menu-item {% if active_page == '/index_02' %}active{% endif %}"><i class="fas fa-bookmark"></i><span>찜한 정책</span></a>
+                <a href="/index_03" class="menu-item {% if active_page == '/index_03' %}active{% endif %}"><i class="fas fa-chart-pie"></i><span>취향 분석</span></a>
+                <a href="/index_04" class="menu-item {% if active_page == '/index_04' %}active{% endif %}"><i class="fas fa-search"></i><span>정책 탐색</span></a>
             </nav>
         </aside>
-
         <main class="content-area">
             <div class="content-header">
                 <h2>오늘의 정책 추천</h2>
-                <p>데이터베이스에서 가져온 정책 정보입니다.</p>
+                <p>좌우로 넘겨서 취향을 알려주세요 (오른쪽: LIKE, 왼쪽: NOPE)</p>
             </div>
-            <div class="policy-card-list-container">
-                {% if geuls %}
-                    {% for being_geul in geuls %}
-                    <a href="{{ being_geul.link }}" target="_blank" class="policy-card">
-                        <h3>{{ being_geul.title }}</h3>
-                        <p>{{ being_geul.summary }}</p>
-                        <span class="period">{{ being_geul.period }}</span>
-                    </a>
+            <div class="card-stack-container">
+                <div class="card-stack" id="cardStack">
+                    {% for policy in policies %}
+                    <div class="swipe-card" data-id="{{ policy.id }}" data-genre="{{ policy.genre }}">
+                        <div class="card-info">
+                            <span class="card-badge">{{ policy.genre }}</span>
+                            <h3 class="card-title">{{ policy.title }}</h3>
+                            <p class="card-desc">{{ policy.summary }}</p>
+                            <span class="period">{{ policy.period }}</span>
+                        </div>
+                        <div class="status-text like-text">LIKE</div>
+                        <div class="status-text nope-text">NOPE</div>
+                    </div>
+                    {% else %}
+                    <div class="no-data-message"><p>표시할 정책 데이터가 없습니다.</p></div>
                     {% endfor %}
-                {% else %}
-                    <p class="no-data-message">표시할 정책 데이터가 없습니다. 데이터베이스에 데이터를 추가해주세요.</p>
-                {% endif %}
+                </div>
             </div>
         </main>
     </div>

@@ -1,173 +1,34 @@
-/* --- 기본 리셋 및 폰트 --- */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", Roboto, sans-serif;
-    height: 100vh;
-    overflow: hidden;
-    background-color: #1a1a1a; /* Global Dark body background */
-    color: #f0f0f0; /* Light text for dark mode */
-}
-
-a {
-    text-decoration: none; /* 링크 밑줄 제거 */
-    color: inherit; /* 부모 색상 상속 */
-}
-
-/* --- 메인 레이아웃 컨테이너 --- */
-.main-container {
-    display: flex;
-    height: 100%;
-}
-
-/* --- 왼쪽 사이드바 (메뉴) 스타일 --- */
-.sidebar {
-    width: 250px;
-    background-color: #222222; /* Darker sidebar */
-    color: #ecf0f1;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.5);
-}
-
-.logo-area {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 40px;
-    text-align: center;
-    letter-spacing: 1px;
-}
-
-.menu {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.menu-item {
-    display: flex;
-    align-items: center;
-    padding: 15px 20px;
-    cursor: pointer;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    color: #bdc3c7;
-}
-
-.menu-item i {
-    font-size: 20px;
-    margin-right: 15px;
-    width: 25px;
-    text-align: center;
-}
-
-.menu-item:hover {
-    background-color: rgba(255,255,255,0.1);
-    color: white;
-}
-
-/* 활성 상태 강조 */
-.menu-item.active {
-    background-color: #555555; /* Darker active background */
-    color: white;
-    font-weight: 600;
-}
-
-
-/* --- 오른쪽 콘텐츠 영역 스타일 --- */
-.content-area {
-    flex: 1;
-    background-color: #282828; /* Dark content area */
-    padding: 40px;
-    overflow-y: auto;
-    position: relative;
-    color: #f0f0f0; /* Light text for content */
-}
-
-.content-header {
-    margin-bottom: 30px;
-}
-
-.content-header h2 {
-    font-size: 28px;
-    color: #ffffff;
-    margin-bottom: 10px;
-}
-
-.content-header p {
-    color: #cccccc;
-    font-size: 16px;
-}
-
-
-/* 정책 카드 리스트 컨테이너 */
-.policy-card-list-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid */
-    gap: 25px;
-    padding: 20px 0;
-}
-
-/* 정책 카드 스타일 */
-.policy-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: #000000; /* Black background */
-    color: #FFFFFF; /* White text */
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.6); /* Enhanced shadow for dark card */
-    padding: 25px;
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    text-decoration: none;
-    min-height: 200px; /* Ensure cards have a minimum height */
-}
-
-.policy-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.8);
-}
-
-.policy-card h3 {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    line-height: 1.3;
-}
-
-.policy-card p {
-    font-size: 15px;
-    line-height: 1.6;
-    margin-bottom: 15px;
-    flex-grow: 1;
-    color: #e0e0e0;
-}
-
-.policy-card .period {
-    font-size: 13px;
-    font-weight: 500;
-    color: #bbbbbb;
-    text-align: right;
-}
-
-.no-data-message {
-    grid-column: 1 / -1; /* Span across all columns */
-    text-align: center;
-    color: #cccccc;
-    font-size: 18px;
-    padding: 50px 0;
-}
-
-/* --- 기타 페이지 콘텐츠를 위한 기본 스타일 --- */
-.content-body {
-    padding: 20px 0;
-    line-height: 1.6;
-    font-size: 16px;
-    color: #e0e0e0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, sans-serif; height: 100vh; overflow: hidden; background-color: #1a1a1a; color: #f0f0f0; }
+a { text-decoration: none; color: inherit; }
+.main-container { display: flex; height: 100%; }
+.sidebar { width: 250px; background-color: #222; padding: 20px; display: flex; flex-direction: column; }
+.logo-area { font-size: 24px; font-weight: 700; margin-bottom: 40px; text-align: center; }
+.menu { display: flex; flex-direction: column; gap: 10px; }
+.menu-item { display: flex; align-items: center; padding: 15px 20px; border-radius: 10px; color: #bdc3c7; }
+.menu-item:hover, .menu-item.active { background-color: #555; color: white; }
+.menu-item i { width: 25px; margin-right: 15px; text-align: center; }
+.content-area { flex: 1; background-color: #282828; padding: 40px; overflow-y: auto; position: relative; }
+.content-header { margin-bottom: 30px; }
+.card-stack-container { display: flex; justify-content: center; align-items: center; min-height: 500px; position: relative; }
+.card-stack { position: relative; width: 400px; height: 600px; }
+.swipe-card { position: absolute; width: 100%; height: 100%; background: #000; border-radius: 20px; box-shadow: 0 15px 30px rgba(0,0,0,0.4); display: flex; flex-direction: column; padding: 25px; transition: transform 0.3s; cursor: grab; }
+.swipe-card:active { cursor: grabbing; }
+.card-info { flex: 1; }
+.card-badge { background: #333; color: #4facfe; padding: 6px 12px; border-radius: 15px; font-size: 13px; font-weight: bold; }
+.card-title { font-size: 28px; margin: 15px 0; }
+.card-desc { color: #e0e0e0; line-height: 1.6; }
+.period { display: block; text-align: right; color: #bbb; margin-top: 20px; font-size: 14px; }
+.status-text { position: absolute; top: 40px; padding: 10px 20px; border: 4px solid; border-radius: 10px; font-size: 36px; font-weight: 800; opacity: 0; transform: rotate(-15deg); transition: opacity 0.2s; }
+.like-text { right: 40px; color: #4ade80; border-color: #4ade80; transform: rotate(15deg); }
+.nope-text { left: 40px; color: #f87171; border-color: #f87171; }
+.policy-grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+.policy-grid-item { background: #000; border-radius: 15px; padding: 20px; transition: transform 0.2s; display: flex; flex-direction: column; }
+.policy-grid-item:hover { transform: translateY(-5px); }
+.grid-info h4 { margin: 10px 0; font-size: 18px; }
+.grid-genre { background: #333; color: #4facfe; padding: 4px 8px; border-radius: 10px; font-size: 11px; }
+.analysis-page { flex-direction: column; align-items: center; }
+.analysis-results { width: 100%; max-width: 800px; background: #000; padding: 30px; border-radius: 15px; text-align: center; }
+.chart-container { margin: 20px 0; font-size: 24px; font-weight: bold; color: #4facfe; }
+.analysis-list div { font-size: 18px; margin: 10px 0; display: flex; justify-content: space-between; padding: 0 40px; }
+.hidden-policy-data { display: none; }
