@@ -5,6 +5,7 @@ from fastapi.templating import Jinja2Templates
 from starlette.status import HTTP_303_SEE_OTHER
 from services import db
 
+
 # APIRouter 인스턴스 생성
 router = APIRouter()
 
