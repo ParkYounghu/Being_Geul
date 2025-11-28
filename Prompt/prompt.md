@@ -127,3 +127,13 @@ postgresql_db 에 being_geul 이라는 table에 있는 데이터를 써서 기�
 }
 
 ```
+
+### [n8n 두번째 gemini prompt]
+
+```
+
+{{ $('Code in JavaScript').item.json.text }}
+
+위 내용은 정부 지원 사업에 관련한 내용이야. 사람들의 선호도를 구분할 수 있는 카테고리나 장르를 하나만 정해줘. 너의 설명은 빼고 한 단어로 정의해줘.
+
+```
