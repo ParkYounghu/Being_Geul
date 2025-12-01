@@ -2,70 +2,78 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>빙글</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>빙글 - 정책 매칭</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link rel="stylesheet" href="/static/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
 </head>
 <body>
+
     <nav>
-        <a href="#" onclick="switchTab('section-home'); return false;" class="active">홈</a>
-        <a href="#" onclick="switchTab('section-liked'); return false;">좋아요</a>
-        <a href="#" onclick="switchTab('section-analysis'); return false;">분석</a>
-        <a href="#" onclick="switchTab('section-search'); return false;">검색</a>
+        <button onclick="switchTab('home')" class="active">홈</button>
+        <button onclick="switchTab('liked')">보관함</button>
+        <button onclick="switchTab('analysis')">분석</button>
+        <button onclick="switchTab('search')">전체</button>
     </nav>
 
-    <section id="section-home" class="page">
-        <div id="home-controls">
-            <input type="text" id="search-input" placeholder="정책 검색...">
-            <button id="undo-button">↩️</button>
-        </div>
-        <div id="card-container">
-            <!-- 카드는 스크립트에서 동적으로 생성됩니다. -->
-        </div>
-        <div id="action-indicators">
-            <div id="pass-indicator" class="indicator">PASS</div>
-            <div id="like-indicator" class="indicator">LIKE</div>
-        </div>
-    </section>
-
-    <section id="section-liked" class="page" style="display: none;">
-        <div id="liked-grid" class="grid-container">
-            <!-- '좋아요'한 정책이 여기에 표시됩니다. -->
-        </div>
-    </section>
-
-    <section id="section-analysis" class="page" style="display: none;">
-        <div id="analysis-container">
-            <h1>'좋아요'한 정책 장르 분석</h1>
-            <div id="analysis-results">
-                <!-- 분석 결과가 여기에 동적으로 삽입됩니다. -->
+    <main id="app-container">
+        
+        <section id="section-home" class="page-section active">
+            <div class="search-wrapper">
+                <input type="text" id="home-search-input" placeholder="관심있는 키워드 검색 (예: 청년, 주거)">
             </div>
-        </div>
-    </section>
 
-    <section id="section-search" class="page" style="display: none;">
-        <div id="search-grid" class="grid-container">
-            <!-- 모든 정책이 여기에 표시됩니다. -->
-        </div>
-    </section>
+            <div id="card-container">
+                </div>
 
-    <!-- Modal Structure -->
-    <div id="modal" class="modal" style="display: none;">
+            <div id="action-indicators">
+                <div id="like-indicator" class="indicator">LIKE</div>
+                <div id="pass-indicator" class="indicator">PASS</div>
+            </div>
+
+            <button id="undo-btn" onclick="undoLastSwipe()">↩️</button>
+        </section>
+
+        <section id="section-liked" class="page-section">
+            <h2>내 보관함</h2>
+            <div id="liked-grid" class="grid-container">
+                </div>
+        </section>
+
+        <section id="section-analysis" class="page-section">
+            <div id="analysis-container">
+                <h2>취향 분석</h2>
+                <div id="analysis-results">
+                    </div>
+            </div>
+        </section>
+
+        <section id="section-search" class="page-section">
+            <h2>전체 정책 보기</h2>
+            <div id="search-grid" class="grid-container">
+                </div>
+        </section>
+
+    </main>
+
+    <div id="detail-modal" class="modal-overlay hidden">
         <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2 id="modal-title"></h2>
-            <p id="modal-summary"></p>
-            <span id="modal-period"></span>
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title">정책 제목</h2>
+            <p id="modal-period" class="modal-meta">기간</p>
+            <div id="modal-summary" class="modal-body">내용</div>
+            
             <div class="modal-actions">
-                <button id="modal-share-button">🔗 공유</button>
-                <a id="modal-link-button" href="#" target="_blank">바로가기</a>
+                <button id="modal-share-btn" class="action-btn share">공유하기 🔗</button>
+                <a id="modal-link-btn" href="#" target="_blank" class="action-btn link">원문 보러가기 🌐</a>
             </div>
         </div>
     </div>
 
     <script>
-        const allPolicies = {{ policies|tojson }};
+        // 서버(Python)에서 보낸 데이터를 자바스크립트 변수로 변환
+        const allPolicies = {{ policies | tojson }};
+        console.log("데이터 수신 완료:", allPolicies.length + "개");
     </script>
     <script src="/static/script.js"></script>
 </body>
