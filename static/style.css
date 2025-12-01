@@ -1,4 +1,26 @@
-/* --- 기본 설정 --- */
+/* --- 기본 설정 및 색상 변수 (진한 그라데이션 버전) --- */
+:root {
+    /* 🌸 봄 (Spring): 핑크빛 그라데이션 */
+    --spring-bg: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+    --spring-text: #fff;
+    --spring-shadow: rgba(255, 154, 158, 0.6);
+
+    /* 🌿 여름 (Summer): 시원한 블루 그라데이션 */
+    --summer-bg: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+    --summer-text: #fff;
+    --summer-shadow: rgba(102, 166, 255, 0.6);
+
+    /* 🍁 가을 (Autumn): 따뜻한 오렌지 그라데이션 */
+    --autumn-bg: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+    --autumn-text: #fff;
+    --autumn-shadow: rgba(253, 160, 133, 0.6);
+
+    /* ❄️ 겨울 (Winter): 차분한 그레이/블루 그라데이션 */
+    --winter-bg: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    --winter-text: #333; /* 겨울은 밝은 배경이라 글자는 어둡게 */
+    --winter-shadow: rgba(161, 196, 253, 0.6);
+}
+
 body, html {
     margin: 0;
     padding: 0;
@@ -7,23 +29,23 @@ body, html {
     background-color: #1a1a1a;
     color: #fff;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    overflow: hidden; /* 스크롤바 숨김 (섹션 내부 스크롤 사용) */
+    overflow: hidden;
 }
 
-/* --- [좌측] 세로 사이드바 네비게이션 (디자인 개선) --- */
+/* --- [좌측] 세로 사이드바 네비게이션 --- */
 nav {
     position: fixed;
     top: 0;
     left: 0;
-    width: 260px; /* [수정] 너비 확대 (200px -> 260px) */
+    width: 260px;
     height: 100vh;
     background-color: #000;
     border-right: 1px solid #333;
     display: flex;
-    flex-direction: column; /* 세로 정렬 */
-    padding-top: 60px; /* 상단 여백 추가 */
+    flex-direction: column;
+    padding-top: 60px;
     z-index: 2000;
-    box-shadow: 4px 0 15px rgba(0,0,0,0.5); /* 그림자 추가로 입체감 */
+    box-shadow: 4px 0 15px rgba(0,0,0,0.5);
 }
 
 nav button {
@@ -31,54 +53,47 @@ nav button {
     border: none;
     color: #999;
     text-decoration: none;
-    
-    /* [수정] 버튼 크기 및 폰트 확대 */
-    padding: 25px 40px; 
-    font-size: 22px; 
-    font-weight: 700; /* 더 굵게 */
-    
+    padding: 25px 40px;
+    font-size: 22px;
+    font-weight: 700;
     transition: all 0.2s ease-in-out;
     text-align: left;
     cursor: pointer;
-    border-left: 6px solid transparent; /* 활성 바 두께 증가 */
-    margin-bottom: 5px; /* 버튼 사이 간격 */
+    border-left: 6px solid transparent;
+    margin-bottom: 5px;
 }
 
 nav button:hover {
     color: #fff;
     background-color: #1a1a1a;
-    padding-left: 45px; /* 호버 시 살짝 오른쪽으로 이동 효과 */
+    padding-left: 45px;
 }
 
-/* 활성 탭 스타일 */
 nav button.active {
     color: #4CAF50;
     background-color: #111;
     border-left: 6px solid #4CAF50;
 }
 
-
 /* --- [우측] 메인 컨텐츠 영역 --- */
 #app-container {
     position: relative;
-    margin-left: 260px; /* [수정] 사이드바 너비(260px)에 맞춤 */
+    margin-left: 260px;
     width: calc(100% - 260px);
     height: 100vh;
     overflow: hidden;
 }
 
-/* --- 섹션 공통 스타일 (SPA) --- */
+/* --- 섹션 공통 스타일 --- */
 .page-section {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    padding: 50px; /* 내부 여백 확대 */
+    padding: 50px;
     box-sizing: border-box;
     overflow-y: auto;
-    
-    /* 초기 상태: JS 로드 전 숨김 */
     opacity: 0;
     visibility: hidden;
     background-color: #1a1a1a;
@@ -89,10 +104,7 @@ nav button.active {
     visibility: visible;
 }
 
-
-/* --- [홈 화면] 검색창 & 카드 --- */
-
-/* 검색창 래퍼 */
+/* --- [홈 화면] 검색창 & 테마 버튼 --- */
 .search-wrapper {
     position: absolute;
     top: 40px;
@@ -102,16 +114,19 @@ nav button.active {
     max-width: 600px;
     z-index: 1000;
     text-align: center;
+    display: flex;
+    gap: 15px;
+    align-items: center;
 }
 
 #home-search-input {
-    width: 100%;
-    padding: 18px 30px; /* 입력창 크기 확대 */
+    flex: 1;
+    padding: 18px 30px;
     border-radius: 40px;
     border: 2px solid #444;
     background: #2a2a2a;
     color: white;
-    font-size: 18px; /* 폰트 확대 */
+    font-size: 18px;
     outline: none;
     box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     transition: border-color 0.3s, box-shadow 0.3s;
@@ -122,59 +137,131 @@ nav button.active {
     box-shadow: 0 4px 20px rgba(76, 175, 80, 0.3);
 }
 
-/* 카드 컨테이너 */
+/* 테마 변경 버튼 스타일 */
+#theme-toggle-btn {
+    padding: 0 25px;
+    height: 60px;
+    border-radius: 30px;
+    border: 2px solid #444;
+    background: #333;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+#theme-toggle-btn:hover {
+    background: #444;
+    transform: translateY(-2px);
+}
+
+/* --- 카드 컨테이너 --- */
 #card-container {
     position: relative;
     width: 100%;
-    max-width: 450px; /* 카드 최대 너비 확대 */
-    height: 65vh; /* 높이 조정 */
+    max-width: 450px;
+    height: 65vh;
     margin: 120px auto 0 auto;
 }
 
+/* [중요 수정] 기본 카드 스타일 */
 .card {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: #222;
-    border: 1px solid #444;
-    border-radius: 25px; /* 둥글기 확대 */
-    padding: 40px; /* 내부 여백 확대 */
+    
+    /* 기본값: 어두운 배경 (테마 적용 전) */
+    background-color: #2a2a2a;
+    
+    border-radius: 25px;
+    padding: 40px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
     cursor: grab;
     
+    /* 텍스트 색상 기본값 */
     color: #fff;
+    
     transform-origin: center bottom;
-    transition: transform 0.1s; /* 부드러운 드래그 */
+    transition: transform 0.1s;
+    border: none;
+    overflow: hidden;
 }
 
+/* [중요 수정] 계절별 카드 스타일 (배경 전체 변경 & 강제 적용 !important) */
+
+/* 🌸 봄 */
+.card.spring { 
+    background: var(--spring-bg) !important; 
+    border-top: none !important;
+    box-shadow: 0 15px 40px var(--spring-shadow);
+}
+.card.spring h2 { color: var(--spring-text) !important; text-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.card.spring p { color: rgba(255,255,255,0.9) !important; }
+.card.spring span { color: var(--spring-text) !important; background: rgba(255,255,255,0.3) !important; }
+
+/* 🌿 여름 */
+.card.summer { 
+    background: var(--summer-bg) !important; 
+    border-top: none !important;
+    box-shadow: 0 15px 40px var(--summer-shadow);
+}
+.card.summer h2 { color: var(--summer-text) !important; text-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.card.summer p { color: rgba(255,255,255,0.9) !important; }
+.card.summer span { color: var(--summer-text) !important; background: rgba(255,255,255,0.3) !important; }
+
+/* 🍁 가을 */
+.card.autumn { 
+    background: var(--autumn-bg) !important; 
+    border-top: none !important;
+    box-shadow: 0 15px 40px var(--autumn-shadow);
+}
+.card.autumn h2 { color: var(--autumn-text) !important; text-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.card.autumn p { color: rgba(255,255,255,0.9) !important; }
+.card.autumn span { color: var(--autumn-text) !important; background: rgba(255,255,255,0.3) !important; }
+
+/* ❄️ 겨울 */
+.card.winter { 
+    background: var(--winter-bg) !important; 
+    border-top: none !important;
+    box-shadow: 0 15px 40px var(--winter-shadow);
+}
+.card.winter h2 { color: var(--winter-text) !important; }
+.card.winter p { color: #555 !important; } /* 겨울은 배경이 밝아서 글씨를 어둡게 */
+.card.winter span { color: var(--winter-text) !important; background: rgba(255,255,255,0.6) !important; }
+
+
+/* 카드 내부 공통 타이포그래피 */
 .card h2 { 
     margin-top: 0; 
-    font-size: 1.8rem; /* 제목 크기 확대 */
-    color: #fff; 
+    font-size: 1.8rem; 
     line-height: 1.4;
-    word-break: keep-all; /* 한글 줄바꿈 개선 */
+    word-break: keep-all;
+    font-weight: 800;
 }
 .card p { 
-    color: #ccc; 
     line-height: 1.7; 
     font-size: 1.1rem;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 8; /* 줄 수 제한 */
+    -webkit-line-clamp: 8; 
     -webkit-box-orient: vertical;
 }
 .card span { 
-    color: #888; 
     font-size: 1rem; 
     margin-top: 15px;
-    display: block;
-    text-align: right;
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 12px;
+    font-weight: bold;
+    align-self: flex-end; /* 우측 정렬 */
+    backdrop-filter: blur(5px);
 }
-
 
 /* --- 스와이프 인디케이터 --- */
 #action-indicators {
@@ -191,7 +278,7 @@ nav button.active {
 }
 
 .indicator {
-    font-size: 4rem; /* 인디케이터 크기 확대 */
+    font-size: 4rem;
     font-weight: 900;
     padding: 15px 30px;
     border-radius: 15px;
@@ -204,11 +291,13 @@ nav button.active {
     color: #4CAF50; 
     border: 6px solid #4CAF50; 
     transform: rotate(-15deg); 
+    background: rgba(255,255,255,0.8);
 }
 #pass-indicator { 
     color: #F44336; 
     border: 6px solid #F44336; 
     transform: rotate(15deg); 
+    background: rgba(255,255,255,0.8);
 }
 
 /* --- 되돌리기 버튼 --- */
@@ -216,7 +305,7 @@ nav button.active {
     position: absolute;
     bottom: 40px;
     left: 40px;
-    width: 70px; /* 버튼 크기 확대 */
+    width: 70px;
     height: 70px;
     border-radius: 50%;
     background: #333;
@@ -236,8 +325,7 @@ nav button.active {
     transform: scale(0.95);
 }
 
-
-/* --- 상세 보기 모달 (Modal) --- */
+/* --- 상세 보기 모달 --- */
 .modal-overlay {
     position: fixed;
     top: 0; left: 0;
@@ -247,14 +335,14 @@ nav button.active {
     display: flex;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(5px); /* 배경 블러 효과 */
+    backdrop-filter: blur(5px);
 }
 .hidden { display: none !important; }
 
 .modal-content {
     background: #1a1a1a;
     width: 90%;
-    max-width: 600px; /* 모달 너비 확대 */
+    max-width: 600px;
     padding: 40px;
     border-radius: 25px;
     border: 1px solid #444;
@@ -263,7 +351,6 @@ nav button.active {
     overflow-y: auto;
     box-shadow: 0 25px 60px rgba(0,0,0,0.9);
 }
-
 .close-modal {
     position: absolute;
     top: 20px; right: 25px;
@@ -273,63 +360,39 @@ nav button.active {
     transition: color 0.2s;
 }
 .close-modal:hover { color: #fff; }
-
-.modal-content h2 { font-size: 2rem; margin-top: 0; margin-bottom: 10px; }
+.modal-content h2 { font-size: 2rem; margin-top: 0; margin-bottom: 10px; color: #fff; }
 .modal-meta { color: #4CAF50; margin-bottom: 20px; font-weight: bold; font-size: 1.1rem; }
 .modal-body { line-height: 1.8; color: #ddd; margin-bottom: 40px; font-size: 1.1rem; white-space: pre-line; }
 
-.modal-actions {
-    display: flex;
-    gap: 20px;
-}
+.modal-actions { display: flex; gap: 20px; }
 .action-btn {
-    flex: 1;
-    padding: 18px;
-    border-radius: 12px;
-    text-align: center;
-    text-decoration: none;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    font-size: 1.1rem;
-    transition: transform 0.2s, filter 0.2s;
+    flex: 1; padding: 18px; border-radius: 12px; text-align: center;
+    text-decoration: none; font-weight: bold; cursor: pointer; border: none;
+    font-size: 1.1rem; transition: transform 0.2s, filter 0.2s;
 }
 .action-btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
 .action-btn.share { background: #FFC107; color: #000; }
 .action-btn.link { background: #2196F3; color: #fff; }
 
-
 /* --- 그리드 (좋아요/검색) --- */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* 그리드 아이템 최소 너비 확대 */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 25px;
     padding-bottom: 60px;
 }
-
 .grid-item {
-    background: #222;
-    border: 1px solid #333;
-    padding: 25px;
-    border-radius: 18px;
-    cursor: pointer;
-    transition: transform 0.2s, background-color 0.2s, border-color 0.2s;
+    background: #222; border: 1px solid #333; padding: 25px; border-radius: 18px;
+    cursor: pointer; transition: transform 0.2s, background-color 0.2s, border-color 0.2s;
 }
 .grid-item:hover {
-    transform: translateY(-7px);
-    background-color: #2a2a2a;
-    border-color: #4CAF50; /* 호버 시 테두리 강조 */
+    transform: translateY(-7px); background-color: #2a2a2a; border-color: #4CAF50;
 }
 .grid-item h4 { margin-top: 0; color: #fff; font-size: 1.3rem; margin-bottom: 10px; }
 .grid-item p { color: #aaa; font-size: 1rem; line-height: 1.5; }
 
-
-/* --- 분석 탭 스타일 --- */
+/* --- 분석 탭 --- */
 #analysis-container h2 { font-size: 2rem; margin-bottom: 30px; text-align: center; }
 #analysis-results {
-    max-width: 700px;
-    margin: 0 auto;
-    background: #222;
-    padding: 30px;
-    border-radius: 20px;
+    max-width: 700px; margin: 0 auto; background: #222; padding: 30px; border-radius: 20px;
 }

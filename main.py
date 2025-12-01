@@ -45,30 +45,39 @@ def get_db():
         db.close()
 
 # SPA 통합 엔드포인트
+# ... (위의 import 부분은 그대로 두세요) ...
+
 @app.get("/")
 def read_root(request: Request, db: Session = Depends(get_db)):
-    # [수정됨] limit(20) 제거 -> 모든 데이터를 가져옵니다.
-    # 최신순 정렬(ID 내림차순)은 유지합니다.
+    # 1. DB에서 데이터 가져오기 (최신순)
     policies_objects = db.query(BeingGeul).order_by(BeingGeul.id.desc()).all()
     
-    # 터미널 로그 (데이터 개수 확인용)
+    # 터미널 로그 확인용
     print(f"------------")
     print(f"DB에서 가져온 전체 데이터 개수: {len(policies_objects)}")
-    if len(policies_objects) > 0:
-        print(f"첫 번째 데이터: {policies_objects[0].title}")
     print(f"------------")
 
-    # 딕셔너리 변환
-    policies_data = [
-        {
+    # 2. [수정됨] 도메인 주소 설정
+    BASE_URL = "https://www.bizinfo.go.kr"
+
+    # 3. [수정됨] 딕셔너리 변환 및 링크 수정 로직
+    policies_data = []
+    for p in policies_objects:
+        
+        # 링크가 존재하고, http로 시작하지 않는 경우(상대 경로인 경우) 도메인을 붙임
+        full_link = p.link
+        if p.link and not p.link.startswith("http"):
+            full_link = f"{BASE_URL}{p.link}"
+            
+        policies_data.append({
             "id": p.id,
             "title": p.title,
+            # summary가 비어있을 경우 대비 및 줄바꿈 처리
             "summary": p.summary.replace('"', '\\"').replace('\n', ' ') if p.summary else "",
             "period": p.period,
-            "link": p.link,
+            "link": full_link,  # 완성된 링크 저장
             "genre": p.genre
-        } for p in policies_objects
-    ]
+        })
     
     return templates.TemplateResponse("index.html", {
         "request": request, 
