@@ -15,14 +15,11 @@
                 
                 <div class="landing-text-group">
                     <h1 class="brand-title">BEING-GEUL</h1>
-                    <p class="brand-slogan">나에게 딱 맞는 정책을 찾아보세요</p>
+                    <p class="brand-slogan" id="landing-slogan">나에게 딱 맞는 정책을 찾아보세요</p>
                 </div>
                 
-                <div class="landing-buttons">
-                    <button id="login-btn-landing" class="landing-btn primary">로그인</button>
-                    <button id="signup-btn-landing" class="landing-btn secondary" onclick="alert('준비 중입니다.')">회원가입</button>
-                    <button id="browse-btn-landing" class="outline-btn">둘러보기 ↓</button>
-                </div>
+                <div class="landing-buttons" id="landing-btn-group">
+                    </div>
             </div>
         </section>
 
@@ -54,7 +51,7 @@
                 <h2>당신의 정책 취향은?</h2>
                 <div id="ai-nickname-display" class="loading-text">
                     <div style="font-size: 3rem; margin-bottom: 20px;">🔒</div>
-                    <div>아직 잠겨있습니다.<br>(카드 20개를 LIKE 해주세요)</div>
+                    <div id="lock-message">아직 잠겨있습니다.<br>(카드 30개를 LIKE 해주세요)</div>
                 </div>
             </div>
         </section>
@@ -71,19 +68,34 @@
     <div id="login-modal" class="modal-overlay hidden">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal('login-modal')">&times;</span>
-            
             <h2 style="margin-top: 0; font-size: 1.8rem; font-weight: 800; margin-bottom: 10px;">로그인</h2>
             <p style="color: #666; margin-bottom: 30px; font-size: 0.95rem;">맞춤 정책 추천을 위해 로그인해주세요.</p>
             
-            <input type="text" id="login-id" class="login-input" placeholder="아이디 입력 (Hint: 123123)">
+            <input type="text" id="login-id" class="login-input" placeholder="아이디 입력">
             <input type="password" id="login-pw" class="login-input" placeholder="비밀번호 입력">
             
             <div class="modal-actions" style="flex-direction: column; gap: 12px;">
-                <button id="login-btn-modal" class="action-btn primary">로그인</button>
+                <button id="login-submit-btn" class="action-btn primary">로그인</button>
                 <div style="display: flex; gap: 10px;">
-                    <button class="action-btn secondary" onclick="alert('회원가입 페이지로 이동합니다.')">회원가입</button>
+                    <button class="action-btn secondary" onclick="switchToSignup()">회원가입</button>
                     <button class="action-btn outline" onclick="closeModal('login-modal')">닫기</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="signup-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('signup-modal')">&times;</span>
+            <h2 style="margin-top: 0; font-size: 1.8rem; font-weight: 800; margin-bottom: 10px;">회원가입</h2>
+            <p style="color: #666; margin-bottom: 30px; font-size: 0.95rem;">간편하게 아이디와 비밀번호만 입력하세요.</p>
+            
+            <input type="text" id="signup-id" class="login-input" placeholder="사용할 아이디">
+            <input type="password" id="signup-pw" class="login-input" placeholder="사용할 비밀번호">
+            
+            <div class="modal-actions" style="flex-direction: column; gap: 12px;">
+                <button id="signup-submit-btn" class="action-btn primary">가입하기 (자동로그인)</button>
+                <button class="action-btn outline" onclick="closeModal('signup-modal')">닫기</button>
             </div>
         </div>
     </div>

@@ -78,21 +78,20 @@ body, html {
     background: #fff; color: #6200ea; transform: scale(1.1); box-shadow: 0 6px 20px rgba(98, 0, 234, 0.2);
 }
 
-/* 7. 랜딩 페이지 버튼 디자인 (가로 정렬로 수정됨) */
+/* 7. 랜딩 페이지 버튼 디자인 */
 .landing-buttons { 
     display: flex; 
-    flex-direction: row; /* 가로 정렬 */
+    flex-direction: row; 
     gap: 10px; 
     margin-top: 30px; 
     width: 100%; 
-    max-width: 600px; /* 버튼 3개 들어가도록 너비 확장 */
+    max-width: 600px; 
     justify-content: center;
 }
 
-/* 모든 랜딩 버튼 공통 (로그인, 회원가입, 둘러보기) */
 .landing-btn, #browse-btn-landing { 
-    flex: 1; /* 너비 균등 분배 */
-    padding: 15px 10px; /* 패딩 조절 */
+    flex: 1; 
+    padding: 15px 10px; 
     border-radius: 20px; 
     font-size: 1rem; 
     font-weight: 800; 
@@ -101,10 +100,9 @@ body, html {
     border: none; 
     position: relative; 
     overflow: hidden;
-    white-space: nowrap; /* 줄바꿈 방지 */
+    white-space: nowrap; 
 }
 
-/* 개별 색상 및 스타일 */
 .landing-btn.primary { 
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; 
     box-shadow: 0 10px 30px rgba(118, 75, 162, 0.3);
@@ -117,9 +115,8 @@ body, html {
 }
 .landing-btn.secondary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
 
-/* 둘러보기 버튼 스타일 수정 */
 #browse-btn-landing {
-    margin-top: 0; /* 기존 마진 제거 */
+    margin-top: 0; 
     background: transparent;
     color: #777;
     border: 2px solid #ccc;
@@ -196,7 +193,7 @@ body, html {
     display: inline-block;
 }
 
-/* 12. 로그인 모달 */
+/* 12. 로그인/회원가입 모달 공통 */
 .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 9999; display: flex; justify-content: center; align-items: center; backdrop-filter: blur(8px); }
 .hidden { display: none !important; }
 .modal-content { 
@@ -262,7 +259,7 @@ body, html {
 
 .landing-banner {
     width: 100%;
-    max-width: 560px; /* 요청하신 대로 이미지 크기 유지 */
+    max-width: 560px; 
     height: auto;
     object-fit: contain;
     margin-bottom: 25px;
@@ -301,7 +298,7 @@ body, html {
 }
 
 #main-hexagon-chart {
-    width: 100%;       /* 부모 컨테이너 너비에 맞춤 */
-    max-width: 600px;  /* 화면에서는 최대 600px까지만 커짐 */
-    height: auto;      /* 비율 유지 */
+    width: 100%;      
+    max-width: 600px; 
+    height: auto;     
 }
