@@ -78,16 +78,33 @@ body, html {
     background: #fff; color: #6200ea; transform: scale(1.1); box-shadow: 0 6px 20px rgba(98, 0, 234, 0.2);
 }
 
-/* 7. 랜딩 페이지 버튼 디자인 */
-/* [수정] 텍스트 그룹 추가로 인한 마진 조정은 아래쪽에 오버라이드 함 */
+/* 7. 랜딩 페이지 버튼 디자인 (가로 정렬로 수정됨) */
 .landing-buttons { 
-    display: flex; flex-direction: column; gap: 15px; margin-top: 40px; width: 100%; max-width: 320px; 
+    display: flex; 
+    flex-direction: row; /* 가로 정렬 */
+    gap: 10px; 
+    margin-top: 30px; 
+    width: 100%; 
+    max-width: 600px; /* 버튼 3개 들어가도록 너비 확장 */
+    justify-content: center;
 }
-.landing-btn { 
-    width: 100%; padding: 20px; border-radius: 20px; 
-    font-size: 1.2rem; font-weight: 800; cursor: pointer; 
-    transition: all 0.3s ease; border: none; position: relative; overflow: hidden;
+
+/* 모든 랜딩 버튼 공통 (로그인, 회원가입, 둘러보기) */
+.landing-btn, #browse-btn-landing { 
+    flex: 1; /* 너비 균등 분배 */
+    padding: 15px 10px; /* 패딩 조절 */
+    border-radius: 20px; 
+    font-size: 1rem; 
+    font-weight: 800; 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+    border: none; 
+    position: relative; 
+    overflow: hidden;
+    white-space: nowrap; /* 줄바꿈 방지 */
 }
+
+/* 개별 색상 및 스타일 */
 .landing-btn.primary { 
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; 
     box-shadow: 0 10px 30px rgba(118, 75, 162, 0.3);
@@ -100,17 +117,14 @@ body, html {
 }
 .landing-btn.secondary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
 
+/* 둘러보기 버튼 스타일 수정 */
 #browse-btn-landing {
-    margin-top: 30px;
+    margin-top: 0; /* 기존 마진 제거 */
     background: transparent;
     color: #777;
     border: 2px solid #ccc;
-    padding: 15px 40px;
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    box-shadow: none;
+    display: flex; align-items: center; justify-content: center;
 }
 #browse-btn-landing:hover {
     border-color: #667eea; color: #667eea; background: rgba(255, 255, 255, 0.5); transform: translateY(-2px);
@@ -248,7 +262,7 @@ body, html {
 
 .landing-banner {
     width: 100%;
-    max-width: 280px;
+    max-width: 560px; /* 요청하신 대로 이미지 크기 유지 */
     height: auto;
     object-fit: contain;
     margin-bottom: 25px;
@@ -274,8 +288,4 @@ body, html {
     color: #888;
     margin: 0;
     font-weight: 500;
-}
-
-.landing-buttons {
-    margin-top: 0; /* 위쪽 마진 재설정 */
 }
