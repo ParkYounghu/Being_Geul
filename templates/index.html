@@ -1,246 +1,123 @@
 <!DOCTYPE html>
-
 <html lang="ko">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>빙글 - 정책 매칭</title>
-
     <link rel="stylesheet" href="/static/style.css">
-
 </head>
-
 <body>
-
     <div class="main-scroll-container">
 
-
-
         <section class="snap-section" id="landing-section">
-
             <div class="landing-content">
-
                 <img src="/images/banner.png" alt="Welcome Banner" class="landing-banner">
-
-               
-
+                
                 <div class="landing-text-group">
-
                     <h1 class="brand-title">BEING-GEUL</h1>
-
                     <p class="brand-slogan" id="landing-slogan">나에게 딱 맞는 정책을 찾아보세요</p>
-
                 </div>
-
-               
-
+                
                 <div class="landing-buttons" id="landing-btn-group">
-
                     </div>
-
             </div>
-
         </section>
-
-
 
         <section class="snap-section" id="main-section">
-
             <header id="main-header">
-
                 <div class="top-bar-layout">
-
                     <input type="text" id="main-search-input" placeholder="관심 키워드 (예: 청년, 창업)">
-
                     <div class="top-right-buttons"></div>
-
                 </div>
-
             </header>
-
-           
-
+            
             <h2 class="section-title">오늘의 추천 정책</h2>
 
-
-
             <div id="card-area">
-
                 <div id="action-indicators">
-
                     <div id="like-indicator" class="indicator">LIKE</div>
-
                     <div id="pass-indicator" class="indicator">PASS</div>
-
                 </div>
-
-               
-
+                
                 <div id="card-container"></div>
-
                 <button id="load-more-btn" style="display: none;">카드 더 가져오기</button>
-
             </div>
-
-           
-
+            
             <button id="undo-btn" style="display: none;">↺</button>
-
         </section>
-
-
 
         <section class="snap-section" id="nickname-section">
-
             <div class="content-box">
-
                 <h2>당신의 정책 취향은?</h2>
-
                 <div id="ai-nickname-display" class="loading-text">
-
                     <div style="font-size: 3rem; margin-bottom: 20px;">🔒</div>
-
                     <div id="lock-message">아직 잠겨있습니다.<br>(카드 30개를 LIKE 해주세요)</div>
-
                 </div>
-
             </div>
-
         </section>
-
-
 
         <section class="snap-section" id="chart-section">
-
             <h1>취향 분포도</h1>
-
             <div class="chart-container">
-
                 <canvas id="main-hexagon-chart"></canvas>
-
             </div>
-
         </section>
 
-
-
     </div>
-
-
 
     <div id="login-modal" class="modal-overlay hidden">
-
         <div class="modal-content">
-
             <span class="close-modal" onclick="closeModal('login-modal')">&times;</span>
-
             <h2 style="margin-top: 0; font-size: 1.8rem; font-weight: 800; margin-bottom: 10px;">로그인</h2>
-
             <p style="color: #666; margin-bottom: 30px; font-size: 0.95rem;">맞춤 정책 추천을 위해 로그인해주세요.</p>
-
-           
-
+            
             <input type="text" id="login-id" class="login-input" placeholder="아이디 입력">
-
             <input type="password" id="login-pw" class="login-input" placeholder="비밀번호 입력">
-
-           
-
+            
             <div class="modal-actions" style="flex-direction: column; gap: 12px;">
-
                 <button id="login-submit-btn" class="action-btn primary">로그인</button>
-
                 <div style="display: flex; gap: 10px;">
-
                     <button class="action-btn secondary" onclick="switchToSignup()">회원가입</button>
-
                     <button class="action-btn outline" onclick="closeModal('login-modal')">닫기</button>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
-
 
     <div id="signup-modal" class="modal-overlay hidden">
-
         <div class="modal-content">
-
             <span class="close-modal" onclick="closeModal('signup-modal')">&times;</span>
-
             <h2 style="margin-top: 0; font-size: 1.8rem; font-weight: 800; margin-bottom: 10px;">회원가입</h2>
-
             <p style="color: #666; margin-bottom: 30px; font-size: 0.95rem;">간편하게 아이디와 비밀번호만 입력하세요.</p>
-
-           
-
+            
             <input type="text" id="signup-id" class="login-input" placeholder="사용할 아이디">
-
             <input type="password" id="signup-pw" class="login-input" placeholder="사용할 비밀번호">
-
-           
-
+            
             <div class="modal-actions" style="flex-direction: column; gap: 12px;">
-
                 <button id="signup-submit-btn" class="action-btn primary">가입하기 (자동로그인)</button>
-
                 <button class="action-btn outline" onclick="closeModal('signup-modal')">닫기</button>
-
             </div>
-
         </div>
-
     </div>
-
-
 
     <div id="detail-modal" class="modal-overlay hidden">
-
         <div class="modal-content">
-
             <span class="close-modal" onclick="closeModal('detail-modal')">&times;</span>
-
             <h2 id="modal-title" style="margin-top: 10px; margin-bottom: 5px;"></h2>
-
             <p id="modal-period" style="font-size: 0.9rem; color: #666; margin-bottom: 20px;"></p>
-
             <div id="modal-summary" style="text-align: left; line-height: 1.6; color: #444; margin-bottom: 30px;"></div>
-
-           
-
+            
             <div class="modal-actions">
-
                 <button id="modal-share-btn" class="action-btn icon" title="공유하기">🔗</button>
-
                 <button id="modal-notify-btn" class="action-btn icon" title="알림받기">🔔</button>
-
                 <a id="modal-link-btn" href="#" target="_blank" class="action-btn primary" style="text-decoration: none;">원문 보러가기</a>
-
             </div>
-
         </div>
-
     </div>
 
-
-
     <script>
-
         window.allPolicies = {{ policies | tojson }};
-
     </script>
-
     <script src="/static/script.js"></script>
-
 </body>
-
 </html>
-
