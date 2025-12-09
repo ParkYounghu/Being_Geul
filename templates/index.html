@@ -51,7 +51,7 @@
                 <h2>당신의 정책 취향은?</h2>
                 <div id="ai-nickname-display" class="loading-text">
                     <div style="font-size: 3rem; margin-bottom: 20px;">🔒</div>
-                    <div id="lock-message">아직 잠겨있습니다.<br>(카드 30개를 LIKE 해주세요)</div>
+                    <div id="lock-message">아직 잠겨있습니다.<br>(카드 20개를 LIKE 해주세요)</div>
                 </div>
             </div>
         </section>
@@ -111,6 +111,19 @@
                 <button id="modal-share-btn" class="action-btn icon" title="공유하기">🔗</button>
                 <button id="modal-notify-btn" class="action-btn icon" title="알림받기">🔔</button>
                 <a id="modal-link-btn" href="#" target="_blank" class="action-btn primary" style="text-decoration: none;">원문 보러가기</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="analysis-complete-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('analysis-complete-modal')">&times;</span>
+            <h2 style="margin-top: 0; font-size: 1.8rem; font-weight: 800; color: #6200ea;">분석 완료! 🎉</h2>
+            <p style="color: #666; margin-bottom: 30px; line-height: 1.6;">
+                20개의 정책을 선택하셨군요!<br>이제 당신의 정책 취향을 확인해보세요.
+            </p>
+            <div class="modal-actions">
+                <button class="action-btn primary" onclick="closeModal('analysis-complete-modal'); document.getElementById('nickname-section').scrollIntoView({behavior: 'smooth'});">결과 확인하러 가기</button>
             </div>
         </div>
     </div>

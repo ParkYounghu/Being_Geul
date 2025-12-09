@@ -3,7 +3,8 @@ window.allPolicies = window.allPolicies || [];
 let currentCardStack = [];
 let lastSwiped = [];
 
-const TARGET_LIKES = 30; 
+// [변경] 기존 30장 -> 20장으로 변경
+const TARGET_LIKES = 20; 
 let likeCount = 0;
 let likedDataForAI = { titles: [], genres: [] };
 let deletedHistory = [];
@@ -36,7 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
         updateRealTimeAnalysis(true); 
     }
 
-    if (document.getElementById('card-container')) initMainPage();
+    if (document.getElementById('card-container')) {
+        initMainPage();
+        updateLandingUI(); // [복구] 랜딩 페이지 버튼 UI 초기화
+    }
     else if (document.getElementById('mypage-container')) initMyPage();
 });
 
@@ -48,6 +52,34 @@ function reconstructLikedData() {
         const p = window.allPolicies.find(x => String(x.id) === String(id));
         if (p) { likedDataForAI.titles.push(p.title); likedDataForAI.genres.push(p.genre); }
     });
+}
+
+// [복구] 랜딩 페이지 버튼 로직 (로그인 여부에 따라 변경)
+function updateLandingUI() {
+    const container = document.getElementById('landing-btn-group');
+    if (!container) return;
+    
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    container.innerHTML = '';
+
+    if (isLoggedIn) {
+        // 로그인 상태: 바로 시작하기, 마이페이지 버튼
+        container.innerHTML = `
+            <button class="landing-btn primary" onclick="document.getElementById('main-section').scrollIntoView({ behavior: 'smooth' })">매칭 시작하기</button>
+            <button class="landing-btn secondary" onclick="location.href='mypage.html'">마이페이지</button>
+        `;
+    } else {
+        // 비로그인 상태: 로그인, 회원가입, 둘러보기 버튼
+        container.innerHTML = `
+            <button class="landing-btn primary" id="login-btn-landing">로그인</button>
+            <button class="landing-btn secondary" id="signup-btn-landing">회원가입</button>
+            <button id="browse-btn-landing">둘러보기</button>
+        `;
+        // 이벤트 리스너 다시 연결
+        document.getElementById('login-btn-landing').addEventListener('click', () => openModal('login-modal'));
+        document.getElementById('signup-btn-landing').addEventListener('click', () => openModal('signup-modal'));
+        document.getElementById('browse-btn-landing').addEventListener('click', () => document.getElementById('main-section').scrollIntoView({ behavior: 'smooth' }));
+    }
 }
 
 // --- Main Page Logic ---
@@ -89,9 +121,7 @@ function initMainPage() {
 }
 
 function setupMainEventListeners() {
-    const loginBtn = document.getElementById('login-btn-landing'); if(loginBtn) loginBtn.addEventListener('click', () => openModal('login-modal'));
-    const signupBtn = document.getElementById('signup-btn-landing'); if(signupBtn) signupBtn.addEventListener('click', () => openModal('signup-modal'));
-    const browseBtn = document.getElementById('browse-btn-landing'); if(browseBtn) browseBtn.addEventListener('click', () => document.getElementById('main-section').scrollIntoView({ behavior: 'smooth' }));
+    // 랜딩 버튼 이벤트는 updateLandingUI에서 처리
     document.getElementById('undo-btn')?.addEventListener('click', undoLastSwipe);
     document.getElementById('load-more-btn')?.addEventListener('click', loadMoreCards);
     document.getElementById('main-search-input')?.addEventListener('input', handleSearch);
@@ -108,7 +138,6 @@ function setupKeyboardNavigation() {
 
 function updateMainUI() {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    const username = localStorage.getItem('username');
     const headerContainer = document.querySelector('.top-right-buttons');
     if (headerContainer) {
         headerContainer.innerHTML = '';
@@ -133,7 +162,7 @@ async function handleSignup() {
             const loginRes = await fetch('/api/login', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({username: id, password: pw}) });
             if (loginRes.ok) {
                 const data = await loginRes.json(); localStorage.setItem('isLoggedIn', 'true'); localStorage.setItem('username', data.username);
-                closeModal('signup-modal'); updateMainUI(); alert(`가입 완료! ${data.username}님 환영합니다.`); document.getElementById('main-section').scrollIntoView({ behavior: 'smooth' });
+                closeModal('signup-modal'); updateMainUI(); updateLandingUI(); alert(`가입 완료! ${data.username}님 환영합니다.`); document.getElementById('main-section').scrollIntoView({ behavior: 'smooth' });
             } else { alert("가입되었습니다. 로그인해주세요."); closeModal('signup-modal'); openModal('login-modal'); }
         } else { const data = await res.json(); alert(data.detail || "가입 실패"); }
     } catch(e) { console.error(e); alert("서버 오류"); }
@@ -146,7 +175,7 @@ async function handleLogin() {
         const res = await fetch('/api/login', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({username: id, password: pw}) });
         if(res.ok) {
             const data = await res.json(); localStorage.setItem('isLoggedIn', 'true'); localStorage.setItem('username', data.username);
-            closeModal('login-modal'); updateMainUI(); alert(`환영합니다, ${data.username}님!`); document.getElementById('main-section').scrollIntoView({ behavior: 'smooth' });
+            closeModal('login-modal'); updateMainUI(); updateLandingUI(); alert(`환영합니다, ${data.username}님!`); document.getElementById('main-section').scrollIntoView({ behavior: 'smooth' });
         } else { alert("아이디 또는 비밀번호를 확인해주세요."); }
     } catch(e) { console.error(e); alert("서버 오류"); }
 }
@@ -205,7 +234,7 @@ function getAnalysisImagePath() {
     return `/images/1${firstKey}/${firstKey}_${secondKey}.png`;
 }
 
-// [수정] 텍스트 제거하고 닉네임만 표시
+// [수정] 닉네임 표시 및 팝업 복구
 async function updateRealTimeAnalysis(fetchNickname = false) {
     renderHexagonChart('main-hexagon-chart');
     
@@ -231,12 +260,16 @@ async function updateRealTimeAnalysis(fetchNickname = false) {
             });
             const data = await res.json();
             if (data.nickname) {
-                // [삭제] "분석 완료" 같은 상태 메시지 로직 제거
-                showNickname(data.nickname); // 닉네임만 전달
+                showNickname(data.nickname); 
                 
                 localStorage.setItem('myTypeNickname', data.nickname);
                 if(imagePath) localStorage.setItem('myTypeImage', imagePath);
-                if(likeCount >= TARGET_LIKES) localStorage.setItem('analysisDone', 'true');
+
+                // [복구] 목표치 달성 시 분석 완료 팝업 띄우기
+                if(likeCount === TARGET_LIKES) {
+                    localStorage.setItem('analysisDone', 'true');
+                    openModal('analysis-complete-modal');
+                }
             }
         } catch(e) { console.error(e); }
     }
@@ -248,7 +281,6 @@ function showResultImage(src) {
 
 function showNickname(nick) { 
     const el = document.getElementById('nickname-placeholder'); 
-    // [수정] 불필요한 서브 텍스트 제거
     if(el) el.innerHTML = `<div style="margin-top:20px; font-weight:bold; font-size:1.5rem;">"${nick}"</div>`; 
 }
 
